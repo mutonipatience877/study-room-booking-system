@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                  http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+              version="2.3">
+
+    <!-- Managed beans (StudyRoomBean, BookingBean) and custom validators
+         (roomNumberFormatValidator, bookingTimeRangeValidator) are
+         registered through annotations - @ManagedBean and
+         @FacesValidator - so no further XML declarations are required
+         here. This file only needs to exist so the container recognizes
+         the app as a JSF application. -->
+
+</faces-config>

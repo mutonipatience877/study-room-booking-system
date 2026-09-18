@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Study Room Form</title>
+    <h:outputStylesheet name="css/styles.css"/>
+</h:head>
+<h:body>
+    <div class="navbar">
+        <span class="brand">Study Room Booking</span>
+        <h:link outputText="Home" value="/index.xhtml"/>
+        <h:link outputText="Study Rooms" value="/rooms/list.xhtml"/>
+        <h:link outputText="Bookings" value="/bookings/list.xhtml"/>
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">#{studyRoomBean.editMode ? 'Edit Study Room' : 'New Study Room'}</h1>
+
+        <div class="card">
+            <h:form id="roomForm">
+                <!-- Inline CSS: error messages are highlighted directly with a style attribute. -->
+                <h:messages globalOnly="false" style="color:#dc2626; font-weight:600; display:block; margin-bottom:16px;"/>
+
+                <div class="form-row">
+                    <h:outputLabel for="roomNumber" value="Room Number"/>
+                    <h:inputText id="roomNumber" value="#{studyRoomBean.selectedRoom.roomNumber}"
+                                 required="true" requiredMessage="Room number is required."
+                                 validatorMessage="Room number must look like A101 or LIB204.">
+                        <!-- VALIDATION TYPE 3: custom validator class -->
+                        <f:validator validatorId="roomNumberFormatValidator"/>
+                    </h:inputText>
+                    <h:message for="roomNumber" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="building" value="Building"/>
+                    <!-- VALIDATION TYPE 1: standard/built-in JSF validator (required + length) -->
+                    <h:inputText id="building" value="#{studyRoomBean.selectedRoom.building}"
+                                 required="true" requiredMessage="Building is required.">
+                        <f:validateLength minimum="2" maximum="60"/>
+                    </h:inputText>
+                    <h:message for="building" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="floor" value="Floor"/>
+                    <!-- VALIDATION TYPE 2: Bean Validation (@NotNull @Min on StudyRoom.floor) applied automatically -->
+                    <h:inputText id="floor" value="#{studyRoomBean.selectedRoom.floor}"/>
+                    <h:message for="floor" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="capacity" value="Capacity"/>
+                    <!-- VALIDATION TYPE 2: Bean Validation (@NotNull @Min @Max on StudyRoom.capacity) -->
+                    <h:inputText id="capacity" value="#{studyRoomBean.selectedRoom.capacity}"/>
+                    <h:message for="capacity" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:selectBooleanCheckbox id="hasProjector" value="#{studyRoomBean.selectedRoom.hasProjector}"/>
+                    <h:outputLabel for="hasProjector" value=" Has projector" style="display:inline; font-weight:400;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:selectBooleanCheckbox id="hasWhiteboard" value="#{studyRoomBean.selectedRoom.hasWhiteboard}"/>
+                    <h:outputLabel for="hasWhiteboard" value=" Has whiteboard" style="display:inline; font-weight:400;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="status" value="Status"/>
+                    <h:selectOneMenu id="status" value="#{studyRoomBean.selectedRoom.status}">
+                        <f:selectItems value="#{studyRoomBean.statuses}"/>
+                    </h:selectOneMenu>
+                </div>
+
+                <h:commandButton value="Save" action="#{studyRoomBean.save}" styleClass="btn btn-primary"/>
+                <h:commandButton value="Cancel" action="#{studyRoomBean.cancel}" styleClass="btn btn-secondary"
+                                  immediate="true"/>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

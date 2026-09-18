@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Study Room Booking System</title>
+    <h:outputStylesheet name="css/styles.css"/>
+
+    <!-- INTERNAL CSS: page-specific styling that only applies to this welcome page. -->
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #1e3a5f, #2563eb);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 48px 32px;
+            text-align: center;
+        }
+        .hero h1 {
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+        }
+        .hero p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        .hero-links {
+            margin-top: 28px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="navbar">
+        <span class="brand">Study Room Booking</span>
+        <h:link outputText="Home" value="index.xhtml"/>
+        <h:link outputText="Study Rooms" value="rooms/list.xhtml"/>
+        <h:link outputText="Bookings" value="bookings/list.xhtml"/>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Study Room Booking System</h1>
+            <p>Find, manage and reserve study rooms across campus.</p>
+            <div class="hero-links">
+                <h:link styleClass="btn btn-primary" outputText="Manage Study Rooms" value="rooms/list.xhtml"/>
+                <h:link styleClass="btn btn-secondary" outputText="Manage Bookings" value="bookings/list.xhtml"/>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:24px;">
+            <h2 class="page-title">About this phase</h2>
+            <p>
+                Full Create, Read, Update and Delete (CRUD) operations are implemented for the
+                <strong>Study Room</strong> and <strong>Booking</strong> entities using JSF and Hibernate,
+                with required-field, Bean Validation and custom validators applied across the forms.
+            </p>
+        </div>
+    </div>
+</h:body>
+</html>

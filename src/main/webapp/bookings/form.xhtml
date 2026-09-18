@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Booking Form</title>
+    <h:outputStylesheet name="css/styles.css"/>
+</h:head>
+<h:body>
+    <div class="navbar">
+        <span class="brand">Study Room Booking</span>
+        <h:link outputText="Home" value="/index.xhtml"/>
+        <h:link outputText="Study Rooms" value="/rooms/list.xhtml"/>
+        <h:link outputText="Bookings" value="/bookings/list.xhtml"/>
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">#{bookingBean.editMode ? 'Edit Booking' : 'New Booking'}</h1>
+
+        <div class="card">
+            <h:form id="bookingForm">
+                <!-- Inline CSS: error messages highlighted directly with a style attribute. -->
+                <h:messages globalOnly="false" style="color:#dc2626; font-weight:600; display:block; margin-bottom:16px;"/>
+
+                <div class="form-row">
+                    <h:outputLabel for="student" value="Student"/>
+                    <!-- VALIDATION TYPE 2: Bean Validation (@NotNull on Booking.student) -->
+                    <h:selectOneMenu id="student" value="#{bookingBean.selectedBooking.student}"
+                                     converter="studentConverter">
+                        <f:selectItem itemLabel="-- select a student --" itemValue="#{null}" noSelectionOption="true"/>
+                        <f:selectItems value="#{bookingBean.students}" var="s" itemLabel="#{s.fullName} (#{s.studentNumber})" itemValue="#{s}"/>
+                    </h:selectOneMenu>
+                    <h:message for="student" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="room" value="Study Room"/>
+                    <!-- VALIDATION TYPE 2: Bean Validation (@NotNull on Booking.studyRoom) -->
+                    <h:selectOneMenu id="room" value="#{bookingBean.selectedBooking.studyRoom}"
+                                     converter="studyRoomConverter">
+                        <f:selectItem itemLabel="-- select a room --" itemValue="#{null}" noSelectionOption="true"/>
+                        <f:selectItems value="#{bookingBean.studyRooms}" var="r" itemLabel="#{r.roomNumber} - #{r.building}" itemValue="#{r}"/>
+                    </h:selectOneMenu>
+                    <h:message for="room" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="bookingDate" value="Booking Date"/>
+                    <!-- VALIDATION TYPE 2: Bean Validation (@NotNull @FutureOrPresent on Booking.bookingDate) -->
+                    <h:inputText id="bookingDate" value="#{bookingBean.selectedBooking.bookingDate}">
+                        <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+                    <h:outputText value=" (yyyy-MM-dd)" style="color:#6b7280; font-size:0.85rem;"/>
+                    <h:message for="bookingDate" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="startTime" value="Start Time"/>
+                    <!-- VALIDATION TYPE 1: standard JSF "required" validation -->
+                    <h:inputText id="startTime" binding="#{startTimeInput}" value="#{bookingBean.selectedBooking.startTime}"
+                                 required="true" requiredMessage="Start time is required.">
+                        <f:convertDateTime type="localTime" pattern="HH:mm"/>
+                    </h:inputText>
+                    <h:outputText value=" (HH:mm)" style="color:#6b7280; font-size:0.85rem;"/>
+                    <h:message for="startTime" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="endTime" value="End Time"/>
+                    <!-- VALIDATION TYPE 3: custom validator, checks endTime is after startTime -->
+                    <h:inputText id="endTime" value="#{bookingBean.selectedBooking.endTime}"
+                                 required="true" requiredMessage="End time is required.">
+                        <f:convertDateTime type="localTime" pattern="HH:mm"/>
+                        <f:validator validatorId="bookingTimeRangeValidator"/>
+                        <f:attribute name="startTimeComponent" value="#{startTimeInput}"/>
+                    </h:inputText>
+                    <h:outputText value=" (HH:mm)" style="color:#6b7280; font-size:0.85rem;"/>
+                    <h:message for="endTime" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="purpose" value="Purpose"/>
+                    <!-- VALIDATION TYPE 2: Bean Validation (@NotNull @Size on Booking.purpose) -->
+                    <h:inputText id="purpose" value="#{bookingBean.selectedBooking.purpose}"/>
+                    <h:message for="purpose" style="color:#dc2626;"/>
+                </div>
+
+                <div class="form-row">
+                    <h:outputLabel for="status" value="Status"/>
+                    <h:selectOneMenu id="status" value="#{bookingBean.selectedBooking.status}">
+                        <f:selectItems value="#{bookingBean.statuses}"/>
+                    </h:selectOneMenu>
+                </div>
+
+                <h:commandButton value="Save" action="#{bookingBean.save}" styleClass="btn btn-primary"/>
+                <h:commandButton value="Cancel" action="#{bookingBean.cancel}" styleClass="btn btn-secondary"
+                                  immediate="true"/>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>
