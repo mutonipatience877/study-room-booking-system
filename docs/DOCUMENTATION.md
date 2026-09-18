@@ -2,7 +2,7 @@
 
 **Assignment 3 — Project Phase 1**
 **Student:** MUTONI Patience
-**Repository:** _add your GitHub link here after pushing (see README.md, Step 8)_
+**Repository:** https://github.com/mutonipatience877/study-room-booking-system
 **Video walkthrough:** _add your Google Vid share link here_
 
 ---
@@ -205,7 +205,7 @@ and offered as a dropdown when creating/editing a booking.
 
 ## 11. GitHub Repository
 
-Public link: **_add after pushing — see README.md Step 8_**
+Public link: https://github.com/mutonipatience877/study-room-booking-system
 
 ## 12. Video Walkthrough
 
